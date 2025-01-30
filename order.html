@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coffee Shop Order</title>
+    <title>Coffee Website HTML and CSS | CodingNepal</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts Links For Icon -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0">
+    
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-image: url('https://online.anyflip.com/mmzmv/ucgj/files/large/6512bd43d9caa6e02c990b0a82652dca.jpg?1678019360');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+        .container {
+            max-width: 600px;
+            margin: 10% auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: rgba(249, 249, 249, 0.9); /* Slightly transparent background */
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+        select, input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+        }
+        button {
+            margin-top: 15px;
+            padding: 10px;
+            width: 100%;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .output {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #eef;
+            border: 1px solid #ccd;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+<a class="logo" href="#">Amazon<span>.Cafe</span></a>
+<ul class="menu-links">
+    <span id="close-menu-btn" class="material-symbols-outlined">close</span>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="manu.html">Manu</a></li>
+    <li><a href="order.html">Order</a></li>
+    <li><a href="About.html">About us</a></li>
+    <li><a href="Contact.html">Contact us</a></li>
+</ul>
+<span id="hamburger-btn" class="material-symbols-outlined">menu</span>
+</nav>
+</header>
+    <div class="container">
+        <h2>Order Your Coffee</h2>
+        
+        <label for="name">Your Name</label>
+        <input type="text" id="name" placeholder="Enter your name">
+
+        <label for="shop">Choose Shop</label>
+        <select id="shop">
+            <option value="Brown">Brown Coffee</option>
+            <option value="Amazone">Amazone Coffee</option>
+        </select>
+
+        <label for="coffee">Choose Coffee</label>
+        <select id="coffee">
+            <option value="Ice Latte">Ice Latte</option>
+            <option value="Black Coffee">Black Coffee</option>
+            <option value="Hot Latte">Hot Latte</option>
+            <option value="Cappuccino">Cappuccino</option>
+        </select>
+
+        <label for="quantity">Quantity</label>
+        <input type="number" id="quantity" min="1" value="1">
+
+        <button onclick="calculatePayment()">Submit</button>
+        
+
+        <div id="output" class="output" style="display: none;"></div>
+    </div>
+
+    <script>
+        const prices = {
+            "Brown": {
+                "Ice Latte": 3.5,
+                "Black Coffee": 2.5,
+                "Hot Latte": 2
+            },
+            "Amazone": {
+                "Ice Latte": 2.5,
+                "Black Coffee": 1.75,
+                "Hot Latte": 1.5,
+                "cappuccino": 2.5,
+                
+            }
+        };
+
+        function calculatePayment() {
+            const shop = document.getElementById('shop').value;
+            const coffee = document.getElementById('coffee').value;
+            const quantity = parseInt(document.getElementById('quantity').value);
+            const name = document.getElementById('name').value.trim();
+
+            if (!name) {
+                alert('Please enter your name.');
+                return;
+            }
+
+            const pricePerUnit = prices[shop][coffee];
+            const totalPrice = pricePerUnit * quantity;
+
+            const output = document.getElementById('output');
+            output.style.display = 'block';
+            output.innerHTML = `
+                <h3>========= ${shop} ========</h3>
+                <p>Your Name: ${name}</p>
+                <p>Coffee: ${coffee}</p>
+                <p>Quantity: ${quantity}</p>
+                <p>You need to Pay: $${totalPrice.toFixed(2)}</p>
+                <h3>========= Thank You ========</h3>
+            `;
+        }
+    </script>
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .output {
+            animation: fadeIn 1s ease-in-out;
+        }
+    </style>
+    <style>
+        @keyframes processing {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        .processing {
+            animation: processing 1s infinite;
+        }
+        .success {
+            animation: fadeIn 1s ease-in-out;
+        }
+    </style>
+    
+    <script>
+        function calculatePayment() {
+            const shop = document.getElementById('shop').value;
+            const coffee = document.getElementById('coffee').value;
+            const quantity = parseInt(document.getElementById('quantity').value);
+            const name = document.getElementById('name').value.trim();
+    
+            if (!name) {
+                alert('Please enter your name.');
+                return;
+            }
+    
+            const output = document.getElementById('output');
+            output.style.display = 'block';
+            output.innerHTML = '<p>Processing your order...</p>';
+            output.classList.add('processing');
+    
+            setTimeout(() => {
+                const pricePerUnit = prices[shop][coffee];
+                const totalPrice = pricePerUnit * quantity;
+    
+                output.classList.remove('processing');
+                output.classList.add('success');
+                output.innerHTML = `
+                    <h3>========= ${shop} ========</h3>
+                    <p>Your Name: ${name}</p>
+                    <p>Coffee: ${coffee}</p>
+                    <p>Quantity: ${quantity}</p>
+                    <p>You need to Pay: $${totalPrice.toFixed(2)}</p>
+                    <h3>========= Thank You ========</h3>
+                `;
+            }, 2000); // Simulate processing time
+        }
+    </script>
+</body>
+</html>
